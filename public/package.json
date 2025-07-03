@@ -1,0 +1,13 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "description": "Personal portfolio website",
+  "main": "index.js",
+  "scripts": {
+    "sass": "sass styles.scss styles.css --watch",
+    "build": "sass styles.scss styles.css --style compressed"
+  },
+  "dependencies": {
+    "sass": "^1.69.5"
+  }
+} 
