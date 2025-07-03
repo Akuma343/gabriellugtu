@@ -47,10 +47,19 @@ async function handleLogin(e) {
     removeMessages();
     
     try {
-        // Simple authentication (in a real app, this would be server-side)
-        if (username === 'admin' && password === 'admin123') {
+        // Send credentials to backend for authentication
+        const response = await fetch('/api/admin-login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        });
+        
+        const data = await response.json();
+        if (response.ok && data.success) {
             // Store authentication token
-            localStorage.setItem('adminToken', 'authenticated');
+            localStorage.setItem('adminToken', data.token);
             localStorage.setItem('adminLoginTime', Date.now());
             
             showMessage('Login successful! Redirecting...', 'success');
@@ -60,7 +69,7 @@ async function handleLogin(e) {
                 window.location.href = 'admin-dashboard.html';
             }, 1500);
         } else {
-            showMessage('Invalid username or password. Please try again.', 'error');
+            showMessage(data.message || 'Invalid username or password. Please try again.', 'error');
         }
     } catch (error) {
         showMessage('An error occurred during login. Please try again.', 'error');
