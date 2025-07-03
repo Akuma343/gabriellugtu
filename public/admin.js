@@ -1,157 +1,67 @@
-// Admin Login JavaScript
-
-document.addEventListener('DOMContentLoaded', function() {
-    initAdminLogin();
-    initPasswordToggle();
-    checkAuthStatus();
-});
-
-// Initialize admin login functionality
-function initAdminLogin() {
-    const loginForm = document.getElementById('adminLoginForm');
-    
-    if (loginForm) {
-        loginForm.addEventListener('submit', handleLogin);
-    }
-}
-
-// Initialize password toggle functionality
-function initPasswordToggle() {
-    const toggleBtn = document.getElementById('togglePassword');
-    const passwordInput = document.getElementById('password');
-    
-    if (toggleBtn && passwordInput) {
-        toggleBtn.addEventListener('click', function() {
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Gabriel Q. Lugtu Portfolio</title>
+    <link rel="stylesheet" href="admin-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="icon" type="image/png" href="granite.png">
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-login-card">
+            <div class="login-header">
+                <img src="granite.png" alt="Logo" class="admin-logo">
+                <h1>Admin Panel</h1>
+                <p>Access your message dashboard</p>
+            </div>
             
-            const icon = toggleBtn.querySelector('i');
-            icon.className = type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
-        });
-    }
-}
-
-// Handle login form submission
-async function handleLogin(e) {
-    e.preventDefault();
-    
-    const form = e.target;
-    const submitBtn = form.querySelector('.login-btn');
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-    
-    // Show loading state
-    submitBtn.classList.add('loading');
-    
-    // Remove any existing error messages
-    removeMessages();
-    
-    try {
-        // Send credentials to backend for authentication
-        const response = await fetch('/api/admin-login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ username, password })
-        });
+            <form id="adminLoginForm" class="login-form">
+                <div class="form-group">
+                    <div class="input-icon">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="username" name="username" placeholder="Username" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="input-icon password-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" name="password" placeholder="Password" required>
+                        <button type="button" class="toggle-password" id="togglePassword" tabindex="-1">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <button type="submit" class="login-btn">
+                    <span>Login</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </form>
+            
+            <div class="login-footer">
+                <a href="index.html" class="back-link">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Portfolio
+                </a>
+            </div>
+        </div>
         
-        const data = await response.json();
-        if (response.ok && data.success) {
-            // Store authentication token
-            localStorage.setItem('adminToken', data.token);
-            localStorage.setItem('adminLoginTime', Date.now());
-            
-            showMessage('Login successful! Redirecting...', 'success');
-            
-            // Redirect to admin dashboard after a short delay
-            setTimeout(() => {
-                window.location.href = 'admin-dashboard.html';
-            }, 1500);
-        } else {
-            showMessage(data.message || 'Invalid username or password. Please try again.', 'error');
-        }
-    } catch (error) {
-        showMessage('An error occurred during login. Please try again.', 'error');
-    } finally {
-        submitBtn.classList.remove('loading');
-    }
-}
+        <div class="background-animation">
+            <div class="floating-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+                <div class="shape shape-4"></div>
+            </div>
+        </div>
+    </div>
 
-// Check if user is already authenticated
-function checkAuthStatus() {
-    const token = localStorage.getItem('adminToken');
-    const loginTime = localStorage.getItem('adminLoginTime');
-    
-    // Check if token exists and is not expired (24 hours)
-    if (token && loginTime) {
-        const currentTime = Date.now();
-        const timeDiff = currentTime - parseInt(loginTime);
-        const hoursDiff = timeDiff / (1000 * 60 * 60);
-        
-        if (hoursDiff < 24) {
-            // User is authenticated, redirect to dashboard
-            window.location.href = 'admin-dashboard.html';
-        } else {
-            // Token expired, clear storage
-            localStorage.removeItem('adminToken');
-            localStorage.removeItem('adminLoginTime');
-        }
-    }
-}
-
-// Show message (success or error)
-function showMessage(message, type) {
-    const form = document.getElementById('adminLoginForm');
-    const messageDiv = document.createElement('div');
-    messageDiv.className = `${type}-message`;
-    messageDiv.textContent = message;
-    
-    // Insert message before the form
-    form.parentNode.insertBefore(messageDiv, form);
-    
-    // Auto-remove error messages after 5 seconds
-    if (type === 'error') {
-        setTimeout(() => {
-            if (messageDiv.parentNode) {
-                messageDiv.remove();
-            }
-        }, 5000);
-    }
-}
-
-// Remove all messages
-function removeMessages() {
-    const messages = document.querySelectorAll('.error-message, .success-message');
-    messages.forEach(message => message.remove());
-}
-
-// Logout function (can be called from dashboard)
-function logout() {
-    localStorage.removeItem('adminToken');
-    localStorage.removeItem('adminLoginTime');
-    window.location.href = 'admin.html';
-}
-
-// Utility function to check if user is authenticated
-function isAuthenticated() {
-    const token = localStorage.getItem('adminToken');
-    const loginTime = localStorage.getItem('adminLoginTime');
-    
-    if (!token || !loginTime) {
-        return false;
-    }
-    
-    const currentTime = Date.now();
-    const timeDiff = currentTime - parseInt(loginTime);
-    const hoursDiff = timeDiff / (1000 * 60 * 60);
-    
-    return hoursDiff < 24;
-}
-
-// Export functions for use in other files
-window.adminUtils = {
-    logout,
-    isAuthenticated,
-    checkAuthStatus
-}; 
+    <script src="admin.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoA6DQD021o6FfQ2z9gA9uvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+</body>
+</html> 
