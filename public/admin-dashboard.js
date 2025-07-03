@@ -76,46 +76,46 @@ function loadMessages() {
 }
 
 // Get sample messages for demonstration
-function getSampleMessages() {
-    return [
-        {
-            id: 1,
-            name: "John Doe",
-            email: "john.doe@example.com",
-            subject: "Project Collaboration",
-            message: "Hi Gabriel, I came across your portfolio and I'm impressed with your work. I have a project that I think would be a great fit for your skills. Would you be interested in discussing a potential collaboration?",
-            date: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
-            read: false
-        },
-        {
-            id: 2,
-            name: "Sarah Johnson",
-            email: "sarah.j@company.com",
-            subject: "Frontend Developer Position",
-            message: "Hello Gabriel, We're looking for a talented frontend developer to join our team. Your portfolio shows exactly the kind of skills we're looking for. Are you currently open to new opportunities?",
-            date: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString(),
-            read: true
-        },
-        {
-            id: 3,
-            name: "Mike Chen",
-            email: "mike.chen@startup.com",
-            subject: "Website Redesign Project",
-            message: "Hi there! I'm the founder of a startup and we need to redesign our website. I love the modern aesthetic of your portfolio. Could you provide a quote for a complete website redesign?",
-            date: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
-            read: false
-        },
-        {
-            id: 4,
-            name: "Emily Rodriguez",
-            email: "emily.r@agency.com",
-            subject: "Freelance Opportunity",
-            message: "Hi Gabriel, I'm a project manager at a digital agency. We often need freelance developers for various projects. Would you be interested in being added to our freelancer database?",
-            date: new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString(),
-            read: true
-        }
-    ];
-}
+//function getSampleMessages() {
+    //return [
+        //{
+            //id: 1,
+            //name: "John Doe",
+            //email: "john.doe@example.com",
+            //subject: "Project Collaboration",
+            //message: "Hi Gabriel, I came across your portfolio and I'm impressed with your work. I have a project that I think would be a great fit for your skills. Would you be interested in discussing a potential collaboration?",
+            //date: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+            //read: false
+        //},
+        //{
+            //id: 2,
+            //name: "Sarah Johnson",
+            //email: "sarah.j@company.com",
+            //subject: "Frontend Developer Position",
+            //message: "Hello Gabriel, We're looking for a talented frontend developer to join our team. Your portfolio shows exactly the kind of skills we're looking for. Are you currently open to new opportunities?",
+            //date: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString(),
+            //read: true
+        //},
+        //{
+            //id: 3,
+            //name: "Mike Chen",
+            //email: "mike.chen@startup.com",
+            //subject: "Website Redesign Project",
+            //message: "Hi there! I'm the founder of a startup and we need to redesign our website. I love the modern aesthetic of your portfolio. Could you provide a quote for a complete website redesign?",
+            //date: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+            //read: false
+        //},
+        //{
+            //id: 4,
+            //name: "Emily Rodriguez",
+            //email: "emily.r@agency.com",
+            //subject: "Freelance Opportunity",
+            //message: "Hi Gabriel, I'm a project manager at a digital agency. We often need freelance developers for various projects. Would you be interested in being added to our freelancer database?",
+            //date: new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString(),
+            //read: true
+        //},
+    //];
+//}
 
 // Update statistics
 function updateStats() {
